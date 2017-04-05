@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func mkcodepen(html, css, js string, e *Element) *Element {
+func mkcodepen(html, css, js string) *Element {
 	return (&Element{
 		Tag: "form",
 		Props: []Prop{
@@ -10,9 +10,7 @@ func mkcodepen(html, css, js string, e *Element) *Element {
 			Prop{Name: "target", Value: "codepen"},
 			Prop{Name: "action", Value: "http://codepen.io/pen/define"},
 		},
-	}).AddChild(
-		e,
-	).AddChild(&Element{
+	}).AddChild(&Element{
 		Tag: "input",
 		Props: []Prop{
 			Prop{Name: "type", Value: "hidden"},

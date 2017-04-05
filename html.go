@@ -97,6 +97,6 @@ func (e *Element) Render() string {
 		return ret + ` />`
 	}
 
-	ret += `>` + e.GetContent()
-	return ret + "\n</" + e.Tag + `>`
+	ret += ">" + e.GetContent()
+	return ret + "</" + e.Tag + `>`
 }

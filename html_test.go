@@ -35,9 +35,7 @@ func TestHTMLElement(t *testing.T) {
 					Text("Google"),
 				},
 			},
-			expect: `<a href="https://google.com">
-Google
-</a>`,
+			expect: `<a href="https://google.com">Google</a>`,
 		},
 		{
 			e: Element{
@@ -48,11 +46,9 @@ Google
 					Text("Yahoo"),
 				},
 			},
-			expect: `<code>
-Google
+			expect: `<code>Google
 Bing
-Yahoo
-</code>`,
+Yahoo</code>`,
 		},
 		{
 			e: Element{
@@ -68,12 +64,8 @@ Yahoo
 					},
 				},
 			},
-			expect: `<a href="https://google.com">
-All hail to 
-<bold>
-Google
-</bold>
-</a>`,
+			expect: `<a href="https://google.com">All hail to 
+<bold>Google</bold></a>`,
 		},
 	}
 
