@@ -33,6 +33,13 @@ div.page {
     font-size: x-large;
 }
 
+div.page > img,
+div.page > p > img {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
 li,p,span,b,i,strike {
     font-size: x-large;
 }
