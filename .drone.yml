@@ -7,8 +7,9 @@ pipeline:
     image: golang
     pull: true
     commands:
-      - go get -t -v
+      - go get -v github.com/jteeuwen/go-bindata/...
       - go generate -x
+      - go get -t -v
       - go build -v
       - go test -v
   build-alpine:
