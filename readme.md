@@ -1,5 +1,7 @@
 Markdown to slide
 
+[![Build Status](https://ci.ronmi.tw/api/badges/ronmi/md-slider/status.svg)](https://ci.ronmi.tw/ronmi/md-slider)
+
 # Synopsis
 
 ```bash
