@@ -104,6 +104,10 @@ func conv(fn string) ([]byte, error) {
 				}
 				saveall(page)
 				root.AddChild(page)
+				root.AddChild(&Element{
+					Tag:   "a",
+					Props: []Prop{{Name: "name", Value: strconv.Itoa(curPage)}},
+				})
 			}
 			page = mkpage(curPage)
 			curPage++
@@ -190,6 +194,10 @@ func conv(fn string) ([]byte, error) {
 	if page != nil {
 		saveall(page)
 		root.AddChild(page)
+		root.AddChild(&Element{
+			Tag:   "a",
+			Props: []Prop{{Name: "name", Value: strconv.Itoa(curPage)}},
+		})
 	}
 
 	html := &Element{Tag: "html"}

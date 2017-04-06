@@ -3,10 +3,20 @@
 package main
 
 import (
+	"io/ioutil"
 	"net/http"
 	"os"
 	"strings"
 )
+
+func loadAsset(fn string) ([]byte, error) {
+	p := "assets/" + fn
+	if _, err := os.Stat("." + p); err != nil {
+		return Asset(p)
+	}
+
+	return ioutil.ReadFile("." + p)
+}
 
 func httpHandler(w http.ResponseWriter, r *http.Request) {
 	dir := "." + strings.TrimRight(r.URL.Path, "/") // strip leading and tailing slash
@@ -15,7 +25,8 @@ func httpHandler(w http.ResponseWriter, r *http.Request) {
 
 	// 先看看是不是 assets
 	if l >= 2 && arr[l-2] == "assets" {
-		ret, err := Asset("assets/" + arr[l-1])
+
+		ret, err := loadAsset(arr[l-1])
 		if err != nil {
 			w.WriteHeader(404)
 			return
@@ -56,14 +67,20 @@ func httpHandler(w http.ResponseWriter, r *http.Request) {
 			)
 		}
 
-		ret := (&Element{Tag: "html"}).AddChild(
-			(&Element{Tag: "head"}).AddChild(&Element{
-				Tag:   "meta",
-				Props: []Prop{{Name: "charset", Value: "utf8"}},
-			}),
-		).AddChild((&Element{Tag: "body"}).AddChild(ul))
+		ret, err := loadAsset("list.html")
+		if err != nil {
+			w.WriteHeader(500)
+			w.Write([]byte(err.Error()))
+			return
+		}
 
-		w.Write([]byte(ret.Render()))
+		dir = dir[1:]
+		if dir == "" {
+			dir = "root"
+		}
+		str := strings.Replace(string(ret), "{{list}}", ul.Render(), -1)
+		str = strings.Replace(str, "{{path}}", dir, -1)
+		w.Write([]byte(str))
 		return
 	}
 
