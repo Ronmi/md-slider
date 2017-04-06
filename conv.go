@@ -17,10 +17,10 @@ func mkpage(n int) *Element {
 	}
 }
 
-func conv(fn string) (string, error) {
+func conv(fn string) ([]byte, error) {
 	buf, err := ioutil.ReadFile(fn)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	root := &Element{
@@ -195,94 +195,36 @@ func conv(fn string) (string, error) {
 	html := &Element{Tag: "html"}
 	head := &Element{Tag: "head"}
 	html.AddChild(
-		head.
-			AddChild(&Element{Tag: "meta", Props: []Prop{Prop{Name: "charset", Value: "utf8"}}}).
-			AddChild(&Element{
-				Tag: "link",
-				Props: []Prop{
-					Prop{Name: "rel", Value: "stylesheet"},
-					Prop{Name: "href", Value: "https://ronmi.tw/prism.all.min.css"},
-				},
-			}).AddChild(&Element{Tag: "style", Content: []Renderer{RawText(`
-body {
-  background-color: #cccccc;
-}
-form {
-  margin: 0;
-}
-button {
-  background-color: white;
-  z-index: 999999;
-  border: 1px solid #9a9a9a;
-  border-radius: 5px;
-  padding: 3px 10px;
-  margin-top: -2em;
-  margin-left: 1em;
-  position: relative;
-}
-button:hover {
-  background-color: #eeeeee;
-}
-div.page {
-  background-color: white;
-  box-shadow: 10px 10px 5px grey;
-  width: 80%;
-  height: 80%;
-  padding: 1em 1.8em;
-  margin: 5% auto;
-  border: 1px solid white;
-  border-radius: 1em;
-  font-size: x-large;
-}
-li,p,span,b,i,strike {
-  font-size: x-large;
-}
-div.lonely {
-  vertical-align: middle;
-}
-div.lonely > h1 {
-  font-size: 3em;
-}
-h1 {
-  font-size: 2em;
-  text-align: center;
-  margin: 0;
-}
-pre[class*="language-"] {
-  width: 80%;
-  max-height: 50%;
-  overflow: auto;
-}`)}}),
+		head.AddChild(&Element{
+			Tag:   "meta",
+			Props: []Prop{Prop{Name: "charset", Value: "utf8"}},
+		}).AddChild(&Element{
+			Tag: "link",
+			Props: []Prop{
+				Prop{Name: "rel", Value: "stylesheet"},
+				Prop{Name: "href", Value: "/assets/prism.css"},
+			},
+		}).AddChild(&Element{
+			Tag: "link",
+			Props: []Prop{
+				Prop{Name: "rel", Value: "stylesheet"},
+				Prop{Name: "href", Value: "/assets/main.css"},
+			},
+		}),
 	)
 	body := &Element{Tag: "body", Props: []Prop{Prop{Name: "id", Value: "body"}}}
 	html.AddChild(body.AddChild(root).AddChild(&Element{
 		Tag:     "script",
-		Props:   []Prop{Prop{Name: "src", Value: "https://ronmi.tw/prism.all.min.js"}},
+		Props:   []Prop{Prop{Name: "src", Value: "/assets/prism.js"}},
 		Content: []Renderer{RawText("")},
 	}).AddChild(&Element{
 		Tag: "script",
 		Content: []Renderer{RawText("var maxPage=" + strconv.Itoa(curPage-1) + `
-var cur = 1;
-document.getElementById("body").addEventListener("keypress", function(e){
-  var x = e.which || e.keyCode;
-  if (x != 37 && x != 39) return;
-
-  if (x == 37) {
-    // left
-    cur--;
-    if (cur < 1) cur = 1;
-  } else if (x == 39) {
-    // right
-    cur++;
-    if (cur > maxPage) cur = maxPage;
-  }
-
-  e = document.getElementById("page" + cur + "");
-  e.scrollIntoView();
-  var style = e.currentStyle || window.getComputedStyle(e);
-  window.scrollBy(0, -parseInt(style.marginTop)/2);
-});
 `)},
+	}).AddChild(&Element{
+		Tag:     "script",
+		Props:   []Prop{Prop{Name: "src", Value: "/assets/event.js"}},
+		Content: []Renderer{RawText("")},
 	}))
-	return html.Render(), nil
+	return []byte(html.Render()), nil
 }

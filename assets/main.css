@@ -1,0 +1,57 @@
+body {
+    background-color: #cccccc;
+}
+
+form {
+    margin: 0;
+}
+
+button {
+    background-color: white;
+    z-index: 999999;
+    border: 1px solid #9a9a9a;
+    border-radius: 5px;
+    padding: 3px 10px;
+    margin-top: -2em;
+    margin-left: 1em;
+    position: relative;
+}
+
+button:hover {
+    background-color: #eeeeee;
+}
+
+div.page {
+    background-color: white;
+    box-shadow: 10px 10px 5px grey;
+    width: 80%;
+    height: 80%;
+    padding: 1em 5%;
+    margin: 5% auto;
+    border: 1px solid white;
+    border-radius: 1em;
+    font-size: x-large;
+}
+
+li,p,span,b,i,strike {
+    font-size: x-large;
+}
+
+div.lonely {
+    vertical-align: middle;
+}
+
+div.lonely > h1 {
+    font-size: 3em;
+}
+
+h1 {
+    font-size: 2em;
+    text-align: center;
+    margin: 0;
+}
+
+pre[class*="language-"] {
+    max-height: 50%;
+    overflow: auto;
+}

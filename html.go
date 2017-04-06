@@ -5,7 +5,7 @@ import (
 	"html"
 	"strings"
 
-	"github.com/Ronmi/blackfriday"
+	"github.com/russross/blackfriday"
 )
 
 // Renderer renders an element to HTML
