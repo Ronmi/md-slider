@@ -1,5 +1,13 @@
 Markdown to slide
 
+# Synopsis
+
+```bash
+docker run -d --name slider -v /path/to/your/markdown/slides:/data -p 9527:8000 ronmi/md-slider
+```
+
+After that, see http://127.0.0.1:9527
+
 # 支援的 markup
 
 - headings: `#`/`##`/`###`

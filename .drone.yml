@@ -24,4 +24,4 @@ pipeline:
     dockerfile: alpine.dockerfile
     username: ronmi
     repo: ronmi/md-slider
-    tags: alpine
+    tags: latest
