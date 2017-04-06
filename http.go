@@ -3,6 +3,7 @@
 package main
 
 import (
+	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -43,7 +44,7 @@ func httpHandler(w http.ResponseWriter, r *http.Request) {
 	if info.IsDir() {
 		f, err := os.Open(dir)
 		if err != nil {
-			w.WriteHeader(401)
+			w.WriteHeader(403)
 			return
 		}
 		infos, _ := f.Readdir(-1)
@@ -83,7 +84,14 @@ func httpHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if !strings.HasSuffix(info.Name(), ".md") {
-		w.WriteHeader(400)
+		f, err := os.Open(dir)
+		if err != nil {
+			w.WriteHeader(403)
+			return
+		}
+		defer f.Close()
+
+		io.Copy(w, f)
 		return
 	}
 
