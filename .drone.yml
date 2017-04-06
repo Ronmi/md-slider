@@ -1,0 +1,26 @@
+workspace:
+  base: /go
+  path: src/git.ronmi.tw/ronmi/md-slider
+  
+pipeline:
+  build:
+    image: golang
+    pull: true
+    commands:
+      - go get -t -v
+      - go generate -x
+      - go build -v
+      - go test -v
+  build-alpine:
+    image: golang
+    commands:
+      - CGO_ENABLED=0 go build -a -installsuffix cgo
+  docker-alpine:
+    when:
+      status: success
+      branch: master
+    image: plugins/docker
+    dockerfile: alpine.dockerfile
+    username: ronmi
+    repo: ronmi/md-slider
+    tags: alpine
