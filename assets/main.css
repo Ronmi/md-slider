@@ -37,12 +37,11 @@ li,p,span,b,i,strike {
     font-size: x-large;
 }
 
-div.lonely {
-    vertical-align: middle;
-}
-
 div.lonely > h1 {
     font-size: 3em;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 h1 {
