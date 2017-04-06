@@ -1,4 +1,5 @@
 (function(cur,x,style){
+    Prism.plugins.autoloader.languages_path = '/assets/prism_grammars/';
     document.getElementById("body").addEventListener("keypress", function(e){
 	x = e.which || e.keyCode;
 	if (x != 37 && x != 39) return;
