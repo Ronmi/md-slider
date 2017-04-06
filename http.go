@@ -20,13 +20,11 @@ func loadAsset(fn string) ([]byte, error) {
 
 func httpHandler(w http.ResponseWriter, r *http.Request) {
 	dir := "." + strings.TrimRight(r.URL.Path, "/") // strip leading and tailing slash
-	arr := strings.Split(dir, "/")
-	l := len(arr)
 
 	// 先看看是不是 assets
-	if l >= 2 && arr[l-2] == "assets" {
+	if idx := strings.Index(dir, "/assets/"); idx > 0 {
 
-		ret, err := loadAsset(arr[l-1])
+		ret, err := loadAsset(dir[idx+8:])
 		if err != nil {
 			w.WriteHeader(404)
 			return
