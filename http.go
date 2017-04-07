@@ -10,8 +10,16 @@ import (
 	"strings"
 )
 
-func loadAsset(fn string) ([]byte, error) {
+type httpHandler struct {
+	devMode bool
+}
+
+func (h httpHandler) loadAsset(fn string) ([]byte, error) {
 	p := "assets/" + fn
+	if !h.devMode {
+		return Asset(p)
+	}
+
 	if _, err := os.Stat("." + p); err != nil {
 		return Asset(p)
 	}
@@ -19,13 +27,13 @@ func loadAsset(fn string) ([]byte, error) {
 	return ioutil.ReadFile("." + p)
 }
 
-func httpHandler(w http.ResponseWriter, r *http.Request) {
+func (h httpHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	dir := "." + strings.TrimRight(r.URL.Path, "/") // strip leading and tailing slash
 
 	// 先看看是不是 assets
 	if idx := strings.Index(dir, "/assets/"); idx > 0 {
 
-		ret, err := loadAsset(dir[idx+8:])
+		ret, err := h.loadAsset(dir[idx+8:])
 		if err != nil {
 			w.WriteHeader(404)
 			return
@@ -66,7 +74,7 @@ func httpHandler(w http.ResponseWriter, r *http.Request) {
 			)
 		}
 
-		ret, err := loadAsset("list.html")
+		ret, err := h.loadAsset("list.html")
 		if err != nil {
 			w.WriteHeader(500)
 			w.Write([]byte(err.Error()))

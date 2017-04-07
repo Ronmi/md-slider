@@ -1,8 +1,15 @@
 package main
 
-import "net/http"
+import (
+	"log"
+	"net/http"
+	"os"
+)
 
 func main() {
-	http.HandleFunc("/", httpHandler)
-	http.ListenAndServe(":8000", nil)
+	h := httpHandler{
+		devMode: os.Getenv("MD_SLIDER_DEV_MODE") != "",
+	}
+	http.Handle("/", h)
+	log.Print(http.ListenAndServe(":8000", nil))
 }
