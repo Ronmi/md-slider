@@ -2,16 +2,35 @@
     Prism.plugins.autoloader.languages_path = '/assets/prism_grammars/';
     body.addEventListener("keyup", function(e){
 	x = e.which || e.keyCode;
-	if (x < 37 || x > 40) return;
+	if (x < 35 || x > 40) return;
+	e.preventDefault();
+    })
+    body.addEventListener("keydown", function(e){
+	x = e.which || e.keyCode;
+	if (x < 35 || x > 40) return;
+	e.preventDefault();
 
-	if (x == 37 || x == 38) {
-	    // left / up
-	    cur--;
-	    if (cur < 1) cur = 1;
-	} else if (x == 39 || x == 40) {
-	    // right / down
-	    cur++;
-	    if (cur > maxPage) cur = maxPage;
+	switch (x) {
+	    case 35:
+		// end
+		cur = maxPage;
+		break;
+	    case 36:
+		// home
+		cur = 1;
+		break;
+	    case 37:
+	    case 38:
+		// left / up
+		cur--;
+		if (cur < 1) cur = 1;
+		break;
+	    case 39:
+	    case 40:
+		// right / down
+		cur++;
+		if (cur > maxPage) cur = maxPage;
+		break;
 	}
 
 	e = document.getElementById("page" + cur + "");
