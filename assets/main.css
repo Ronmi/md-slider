@@ -1,5 +1,7 @@
 body {
     background-color: #cccccc;
+    margin: 0;
+    padding: 0;
 }
 
 form {
@@ -27,7 +29,7 @@ div.page {
     width: 80%;
     height: 80%;
     padding: 1em 5%;
-    margin: 5% auto;
+    margin: 9% auto;
     border: 1px solid white;
     border-radius: 1em;
     font-size: x-large;
@@ -49,12 +51,12 @@ div.lonely > h1 {
     position: relative;
     top: 50%;
     transform: translateY(-50%);
+    text-align: center;
+    margin: 0;
 }
 
 h1 {
     font-size: 2em;
-    text-align: center;
-    margin: 0;
 }
 
 pre[class*="language-"] {

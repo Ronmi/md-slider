@@ -1,4 +1,5 @@
-(function(body,cur,x,style){
+(function(body,cur,scroll,x,style,e,lastresize){
+    
     Prism.plugins.autoloader.languages_path = '/assets/prism_grammars/';
     body.addEventListener("keyup", function(e){
 	x = e.which || e.keyCode;
@@ -33,9 +34,19 @@
 		break;
 	}
 
-	e = document.getElementById("page" + cur + "");
-	e.scrollIntoView();
-	style = e.currentStyle || window.getComputedStyle(e);
-	window.scrollBy(0, -parseInt(style.marginTop)/2);
+	scroll(cur);
     });
-})(document.getElementById("body"),1);
+
+    document.body.onresize = function() {
+	scroll(cur);
+    };
+    
+    scroll(cur);
+
+})(document.getElementById("body"),1,
+   function(cur,e,style) {
+       e = document.getElementById("page" + cur + "");
+       e.scrollIntoView();
+       style = e.currentStyle || window.getComputedStyle(e);
+       window.scrollBy(0, -parseInt(style.marginTop)/2);
+   });
