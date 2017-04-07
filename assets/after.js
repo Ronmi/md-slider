@@ -1,6 +1,6 @@
-(function(cur,x,style){
+(function(body,cur,x,style){
     Prism.plugins.autoloader.languages_path = '/assets/prism_grammars/';
-    document.getElementById("body").addEventListener("keyup", function(e){
+    body.addEventListener("keyup", function(e){
 	x = e.which || e.keyCode;
 	if (x < 37 || x > 40) return;
 
@@ -19,4 +19,4 @@
 	style = e.currentStyle || window.getComputedStyle(e);
 	window.scrollBy(0, -parseInt(style.marginTop)/2);
     });
-})(1);
+})(document.getElementById("body"),1);

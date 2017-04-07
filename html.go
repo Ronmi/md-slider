@@ -34,10 +34,7 @@ type MDText string
 
 // Render for text, expands markdown formats
 func (t MDText) Render() string {
-	// 要把前後的 <p></p>去掉
-	ret := blackfriday.MarkdownCommon([]byte(t))
-	l := len(ret)
-	return string(ret[3 : l-5])
+	return string(blackfriday.MarkdownCommon([]byte(t)))
 }
 
 // Prop represents an HTML property
