@@ -1,4 +1,4 @@
-(function(pres, append, i, pre, code, ele, tmp){
+(function(pres, append, codepen, i, pre, code){
     for (i=0; i<pres.length; i++) {
 	pre = pres.item(i)
 
@@ -14,73 +14,20 @@
 	// 處理各種特殊 code blocks
 	switch (code.className) {
 	    case "language-html":
-		ele = document.createElement("form");
-		ele.target = "codepen";
-		ele.method = "POST";
-		ele.action = "http://codepen.io/pen/define/";
-
-		tmp = document.createElement("input");
-		tmp.name = "data";
-		tmp.type = "hidden";
-		tmp.value = JSON.stringify({
-		    "html": code.textContent
-		});
-		ele.appendChild(tmp);
-
-		tmp = document.createElement("button");
-		tmp.textContent = "try it!";
-		tmp.type = "submit";
-		ele.appendChild(tmp);
-
-		append(pre, ele);
+		append(pre, codepen("html", code));
 		break;
 	    case "language-js":
-		ele = document.createElement("form");
-		ele.target = "codepen";
-		ele.method = "POST";
-		ele.action = "http://codepen.io/pen/define/";
-
-		tmp = document.createElement("input");
-		tmp.name = "data";
-		tmp.type = "hidden";
-		tmp.value = JSON.stringify({
-		    "js": code.textContent
-		});
-		ele.appendChild(tmp);
-
-		tmp = document.createElement("button");
-		tmp.textContent = "try it!";
-		tmp.type = "submit";
-		ele.appendChild(tmp);
-
-		append(pre, ele);
+		append(pre, codepen("js", code));
 		break;
 	    case "language-css":
-		ele = document.createElement("form");
-		ele.target = "codepen";
-		ele.method = "POST";
-		ele.action = "http://codepen.io/pen/define/";
-
-		tmp = document.createElement("input");
-		tmp.name = "data";
-		tmp.type = "hidden";
-		tmp.value = JSON.stringify({
-		    "css": code.textContent
-		});
-		ele.appendChild(tmp);
-
-		tmp = document.createElement("button");
-		tmp.textContent = "try it!";
-		tmp.type = "submit";
-		ele.appendChild(tmp);
-
-		append(pre, ele);
+		append(pre, codepen("css", code));
 		break;
 	}
     }
 
     
 })(document.getElementsByTagName("pre"),
+   // append
    function(pre, node){
        if (pre.nextSibling == null) {
 	   pre.parentNode.appendChild(node);
@@ -88,4 +35,26 @@
        }
 
        pre.parentNode.insertBefore(node, pre.nextSibling);
+   },
+   // codepen
+   function (key, code, ele, tmp, obj) {
+       ele = document.createElement("form");
+       ele.target = "codepen";
+       ele.method = "POST";
+       ele.action = "http://codepen.io/pen/define/";
+
+       tmp = document.createElement("input");
+       tmp.name = "data";
+       tmp.type = "hidden";
+       obj = {};
+       obj[key] = code.textContent;
+       tmp.value = JSON.stringify(obj);
+       ele.appendChild(tmp);
+
+       tmp = document.createElement("button");
+       tmp.textContent = "try it!";
+       tmp.type = "submit";
+       ele.appendChild(tmp);
+
+       return ele
    })
