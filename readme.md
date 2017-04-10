@@ -40,6 +40,8 @@ some more text
 [Copyright information of the gopher image](https://blog.golang.org/gopher)
 ```
 
+![example animation of slides above](https://git.ronmi.tw/ronmi/md-slider/raw/master/example.gif)
+
 # Markup
 
 Level 1 or 2 headings are marks of page beginning.
