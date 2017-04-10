@@ -33,20 +33,47 @@ div.page {
     border: 1px solid white;
     border-radius: 1em;
     font-size: x-large;
+    position: relative;
 }
 
-div.page > img,
-div.page > p > img {
+.pageTitle {
+    margin: 0;
+    padding: 0;
+    height: 2.5em;
+}
+.pageContent {
+    margin: 0;
+    padding: 0;
+    height: calc(90% - 4.5em);
+}
+.lonely {
+    height: calc(90% - 2em);
+}
+
+.pageFoot {
+    padding: 0;
+    margin: 0;
+    font-size: small;
+    position: absolute;
+    bottom: 1em;
+    right: 5%;
+    text-align: right;
+}
+
+.pageContent > img,
+.pageContent > p > img {
     margin-left: auto;
     margin-right: auto;
     display: block;
+    height: inherit;
+    width: auto;
 }
 
 li,p,span,b,i,strike {
     font-size: x-large;
 }
 
-div.lonely > h1 {
+.lonely > h1 {
     font-size: 3em;
     position: relative;
     top: 50%;
@@ -62,4 +89,44 @@ h1 {
 pre[class*="language-"] {
     max-height: 50%;
     overflow: auto;
+}
+
+.firstPage > .pageContent,
+.lastPage > .pageContent {
+    position: relative;
+    height: auto;
+    top: 33%;
+    transform: translateY(-50%);
+    margin: 0 auto;
+    width: 75%;
+    font-size: 1.3em;
+}
+
+.slideTitle h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 2.5em;
+}
+
+.authorName {
+    margin-top: 1em;
+}
+
+.lastPage .authorName {
+    margin: 0;
+}
+
+.lastPage .authorMail {
+    font-size: 1em;
+    margin-bottom: 10px;
+}
+
+.authorNotes {
+    font-size: 0.6em;
+}
+
+.firstPage p,
+.lastPage p {
+    margin: 0;
+    padding: 0;
 }

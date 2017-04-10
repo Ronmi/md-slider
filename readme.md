@@ -10,24 +10,56 @@ docker run -d --name slider -v /path/to/your/markdown/slides:/data -p 9527:8000 
 
 After that, see http://127.0.0.1:9527
 
-# 支援的 markup
+```markdown
+#+TITLE: MD-Slider
+#+SUBTITLE: Simple Markdown-to-slides converter inspired by x/tool/present
+#+AUTHOR: Ronmi Ren
+#+TITLETEXT: **Nerdy** programmer
+#+TITLETEXT: Another line of title
+#+EMAIL: QAQ@example.com
+#+URL: https://81k.today
+#+TEXT: [81K Today](https://81k.today)
+#+FOOTER: [MD-Slider](https://git.ronmi.tw/ronmi/md-slider)
 
-- headings: `#`/`##`/`###`
-- lists: `*`/`-`/`+`/`1.`
-- code block: triple back-quote with hint
-- formats: 
-  - fixed: back-quote
-  - bold: `*`
-  - italic: `_`
-  - strike: `~~`
-  - link: `[text](url)`
+# First page
 
-## 有特殊處理的 hint
+## Second page
 
-- `html`
+some text
 
-## 會特殊處理的 markup
+- some
+- list
+- items
 
-`#` 和 `##` 都會開一張新的投影片
+# Third page
 
-投影片沒有內文的時候，標題會上下左右置中
+some more text
+
+![gopher](https://blog.golang.org/gopher/header.jpg)
+
+[Copyright information of the gopher image](https://blog.golang.org/gopher)
+```
+
+# Markup
+
+Level 1 or 2 headings are marks of page beginning.
+
+All lines before first page mark are metadata.
+
+## Metadata
+
+Required tags:
+
+- TITLE: Title of this slide, shows in first page.
+- AUTHOR: Your name.
+- EMAIL: Your email, shows in last page.
+
+Optional tags:
+
+- FOOTER: One line of markdown text shows at bottom of every page.
+- SUBTITLE: Description of slide title, show in first page.
+- FACEBOOK: Your Facebook username, shows in last page.
+- TWITTER: Your Twitter username (Without `@`), shows in last page.
+- URL: Some url about you, shows in last page.
+- TEXT: One line of markdown text about you, shows in last page.
+- TITLETEXT: One line of markdown text about you, shows in first page.

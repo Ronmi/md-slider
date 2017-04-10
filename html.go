@@ -70,6 +70,30 @@ func (e *Element) AddChild(c Renderer) *Element {
 	return e
 }
 
+// AppendProp adds a property to element, insteads of overwritting, add to tail if exists
+func (e *Element) AppendProp(n, v string) *Element {
+	idx := -1
+	for k, p := range e.Props {
+		if p.Name == n {
+			idx = k
+			break
+		}
+	}
+	if idx == -1 {
+		e.Props = append(e.Props, Prop{Name: n, Value: v})
+		return e
+	}
+
+	e.Props[idx].Value += " " + v
+
+	return e
+}
+
+// AddClass adds a css class to this element
+func (e *Element) AddClass(c string) *Element {
+	return e.AppendProp("class", c)
+}
+
 // GetContent returns rendered content
 func (e *Element) GetContent() string {
 	ret := make([]string, 0, len(e.Content))
