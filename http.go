@@ -5,6 +5,7 @@ package main
 import (
 	"io"
 	"io/ioutil"
+	"mime"
 	"net/http"
 	"os"
 	"strings"
@@ -27,6 +28,15 @@ func (h httpHandler) loadAsset(fn string) ([]byte, error) {
 	return ioutil.ReadFile("." + p)
 }
 
+func (h httpHandler) setMIME(w http.ResponseWriter, fn string) {
+	arr := strings.Split(fn, ".")
+	if l := len(arr); l > 0 {
+		if typ := mime.TypeByExtension("." + arr[len(arr)-1]); typ != "" {
+			w.Header().Set("Content-Type", typ)
+		}
+	}
+}
+
 func (h httpHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	dir := "." + strings.TrimRight(r.URL.Path, "/") // strip leading and tailing slash
 
@@ -39,6 +49,7 @@ func (h httpHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		h.setMIME(w, dir)
 		w.Write(ret)
 		return
 	}
@@ -103,7 +114,7 @@ func (h httpHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ret, err := conv(dir)
+	ret, err := conv(dir, "main")
 	if err != nil {
 		w.WriteHeader(401)
 		return

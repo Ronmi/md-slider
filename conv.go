@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"net/url"
 	"strconv"
 	"strings"
 )
@@ -19,8 +20,10 @@ func mkpage(n int) *Element {
 
 // Page 代表一張投影片
 type Page struct {
+	Num     int
 	Title   string
 	Content string
+	Notes   []string // presenter notes
 }
 
 // ToElement 把投影片轉成 HTML element tree
@@ -28,11 +31,11 @@ func (p *Page) ToElement(footer string) *Element {
 	ret := &Element{Tag: "div"}
 	ret.AddClass("page")
 
-	head := (&Element{Tag: "div"}).AddClass("pageTitle").AddChild(
+	head := (&Element{Tag: "header"}).AddClass("pageTitle").AddChild(
 		(&Element{Tag: "h1"}).AddChild(Text(p.Title)),
 	)
-	body := (&Element{Tag: "div"}).AddClass("pageContent").AddChild(MDText(p.Content))
-	foot := (&Element{Tag: "div"}).AddClass("pageFoot").AddChild(MDText(footer))
+	body := (&Element{Tag: "section"}).AddClass("pageContent").AddChild(MDText(p.Content))
+	foot := (&Element{Tag: "footer"}).AddClass("pageFoot").AddChild(MDText(footer))
 
 	if p.Content == "" {
 		head.AddClass("lonely")
@@ -41,6 +44,12 @@ func (p *Page) ToElement(footer string) *Element {
 	ret.AddChild(head)
 	if p.Content != "" {
 		ret.AddChild(body)
+	}
+
+	if len(p.Notes) > 0 {
+		n := &Element{Tag: "script"}
+		n.AddChild(RawText(`notes=('undefined'==typeof notes)?{}:notes;notes["p` + strconv.Itoa(p.Num) + `"] = "` + url.QueryEscape(strings.Join(p.Notes, "\n")) + `";`))
+		ret.AddChild(n)
 	}
 
 	return ret.AddChild(foot)
@@ -113,6 +122,7 @@ func (s *Slides) ToElements() []*Element {
 	cnt++
 	ret = append(ret, e)
 	for _, p := range s.pages {
+		p.Num = cnt
 		e = p.ToElement(s.Footer)
 		e.AppendProp("id", "page"+strconv.Itoa(cnt))
 		ret = append(ret, e)
@@ -126,7 +136,7 @@ func (s *Slides) ToElements() []*Element {
 	return ret
 }
 
-func conv(fn string) ([]byte, error) {
+func conv(fn, css string) ([]byte, error) {
 	barr, err := ioutil.ReadFile(fn)
 	if err != nil {
 		return nil, err
@@ -222,6 +232,14 @@ func conv(fn string) ([]byte, error) {
 			continue
 		}
 
+		if strings.HasPrefix(l, "#+NOTE:") {
+			// presenter notes
+			if page != nil {
+				page.Notes = append(page.Notes, strings.TrimSpace(l[7:]))
+				continue
+			}
+		}
+
 		if len(l) >= 3 && l[1] == '#' && l[2] == '#' {
 			// 至少會是 h3
 			buf += l + "\n"
@@ -245,7 +263,13 @@ func conv(fn string) ([]byte, error) {
 	head := &Element{Tag: "head"}
 	html.AddChild(
 		head.AddChild(
-			(&Element{Tag: "meta"}).AppendProp("charset", "utf8"),
+			(&Element{Tag: "meta"}).AppendProp("charset", "UTF-8"),
+		).AddChild(
+			(&Element{Tag: "meta"}).AppendProp(
+				"name", "viewport",
+			).AppendProp(
+				"content", "width=device-width, initial-scale=1.0",
+			),
 		).AddChild(
 			(&Element{Tag: "link"}).AppendProp(
 				"rel", "stylesheet",
@@ -256,7 +280,7 @@ func conv(fn string) ([]byte, error) {
 			(&Element{Tag: "link"}).AppendProp(
 				"rel", "stylesheet",
 			).AppendProp(
-				"href", "/assets/main.css",
+				"href", "/assets/"+css+".css",
 			),
 		),
 	)
@@ -272,6 +296,8 @@ func conv(fn string) ([]byte, error) {
 		(&Element{Tag: "script"}).AppendProp("src", "/assets/prism.js").AddChild(RawText("")),
 	).AddChild(
 		(&Element{Tag: "script"}).AppendProp("src", "/assets/after.js").AddChild(RawText("")),
+	).AddChild(
+		(&Element{Tag: "div"}).AddChild(RawText("")).AppendProp("style", "height:10vh;"),
 	))
-	return []byte(html.Render()), nil
+	return []byte("<!DOCTYPE html>" + html.Render()), nil
 }
