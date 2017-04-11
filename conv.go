@@ -48,7 +48,7 @@ func (p *Page) ToElement(footer string) *Element {
 
 	if len(p.Notes) > 0 {
 		n := &Element{Tag: "script"}
-		n.AddChild(RawText(`notes=('undefined'==typeof notes)?{}:notes;notes["p` + strconv.Itoa(p.Num) + `"] = "` + url.QueryEscape(strings.Join(p.Notes, "\n")) + `";`))
+		n.AddChild(RawText(`notes=('undefined'==typeof notes)?{}:notes;notes["p` + strconv.Itoa(p.Num) + `"] = "` + url.PathEscape(strings.Join(p.Notes, "\n")) + `";`))
 		ret.AddChild(n)
 	}
 
