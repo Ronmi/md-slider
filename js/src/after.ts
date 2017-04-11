@@ -1,13 +1,13 @@
 /// <reference path="../go.d.ts" />
 
-(function () {
-    const scroll = function(cur: number) {
-        const e = document.getElementById("page" + cur + "");
-        e.scrollIntoView();
-        const style = window.getComputedStyle(e);
-        window.scrollBy(0, -parseInt(style.marginTop) / 2);
-    };
+function scroll(cur: number) {
+    const e = document.getElementById("page" + cur + "");
+    e.scrollIntoView();
+    const style = window.getComputedStyle(e);
+    window.scrollBy(0, -parseInt(style.marginTop) / 2);
+}
 
+(function () {
     const body = document.getElementsByTagName("body")[0];
     let cur = 1;
 
@@ -23,26 +23,26 @@
         e.preventDefault();
 
         switch (x) {
-            case 35:
-                // end
-                cur = maxPage;
-                break;
-            case 36:
-                // home
-                cur = 1;
-                break;
-            case 37:
-            case 38:
-                // left / up
-                cur--;
-                if (cur < 1) cur = 1;
-                break;
-            case 39:
-            case 40:
-                // right / down
-                cur++;
-                if (cur > maxPage) cur = maxPage;
-                break;
+        case 35:
+            // end
+            cur = maxPage;
+            break;
+        case 36:
+            // home
+            cur = 1;
+            break;
+        case 37:
+        case 38:
+            // left / up
+            cur--;
+            if (cur < 1) cur = 1;
+            break;
+        case 39:
+        case 40:
+            // right / down
+            cur++;
+            if (cur > maxPage) cur = maxPage;
+            break;
         }
 
         scroll(cur);
