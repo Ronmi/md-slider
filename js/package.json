@@ -1,0 +1,15 @@
+{
+  "name": "md-slider",
+  "version": "0.0.1",
+  "description": "Markdown-to-slides",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ronmi Ren <ronmi.ren@gmail.com>",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "@types/prismjs": "^1.6.1",
+    "typescript": "^2.2.2"
+  }
+}

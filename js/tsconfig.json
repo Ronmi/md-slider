@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+	"target": "ES6",
+        "module": "system",
+        "noImplicitAny": true,
+	"noImplicitThis": true,
+	"noImplicitReturns": true,
+	"noUnusedLocals": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+	"alwaysStrict": true,
+        "sourceMap": true,
+	"baseUrl": "/assets/js/",
+	"paths": {
+	    "*": ["*"]
+	},
+	"outDir": "../assets/js/",
+	"lib": [
+	    "DOM",
+	    "ES6",
+	    "ES2015"
+	]
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
