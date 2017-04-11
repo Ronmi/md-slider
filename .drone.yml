@@ -9,12 +9,10 @@ pipeline:
       - cd js
       - npm i
       - npm run tsc
-      - ls ../assets/js
   build-go:
     image: golang
     pull: true
     commands:
-      - ls assets/js
       - go get -v github.com/jteeuwen/go-bindata/...
       - go generate -x
       - go get -t -v
