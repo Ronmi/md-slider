@@ -1,9 +1,15 @@
 workspace:
   base: /go
   path: src/git.ronmi.tw/ronmi/md-slider
-  
+
 pipeline:
-  build:
+  build-js:
+    image: node
+    commands:
+      - cd js
+      - npm i
+      - npm run tsc
+  build-go:
     image: golang
     pull: true
     commands:
