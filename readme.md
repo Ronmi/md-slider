@@ -65,3 +65,18 @@ Optional tags:
 - URL: Some url about you, shows in last page.
 - TEXT: One line of markdown text about you, shows in last page.
 - TITLETEXT: One line of markdown text about you, shows in first page.
+
+# Presenter notes
+
+Add a special URL parameter `present` will enable presenter mode.
+
+```
+// original slides URL
+http://127.0.0.1:9527/example.md
+// enable presenter mode
+http://127.0.0.1:9527/example.md?present=enable
+```
+
+# License
+
+GPLv3
