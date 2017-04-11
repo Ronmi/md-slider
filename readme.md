@@ -24,16 +24,20 @@ After that, see http://127.0.0.1:9527
 # First page
 
 ## Second page
+#+NOTE: my note
 
 some text
 
 - some
 - list
 - items
+#+NOTE: another line of note
 
 # Third page
 
 some more text
+
+#+NOTE: notes for page 3
 
 ![gopher](https://blog.golang.org/gopher/header.jpg)
 
@@ -67,6 +71,8 @@ Optional tags:
 - TITLETEXT: One line of markdown text about you, shows in first page.
 
 # Presenter notes
+
+Add `#+NOTE:` tags to your slides first.
 
 Add a special URL parameter `present` will enable presenter mode.
 
