@@ -102,6 +102,7 @@ func (h httpHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	name := "main"
 	if !strings.HasSuffix(info.Name(), ".md") {
 		f, err := os.Open(dir)
 		if err != nil {
@@ -114,7 +115,11 @@ func (h httpHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ret, err := conv(dir, "main")
+	if r.URL.Query().Get("present") != "" {
+		name = "present"
+	}
+
+	ret, err := conv(dir, name)
 	if err != nil {
 		w.WriteHeader(401)
 		return

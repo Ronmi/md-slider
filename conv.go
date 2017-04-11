@@ -288,7 +288,7 @@ func conv(fn, css string) ([]byte, error) {
 	for _, e := range s.ToElements() {
 		body.AddChild(e)
 	}
-	html.AddChild(body.AddChild(
+	body.AddChild(
 		(&Element{Tag: "script"}).AddChild(RawText("var maxPage=" + strconv.Itoa(s.Len()+2) + ";")),
 	).AddChild(
 		(&Element{Tag: "script"}).AppendProp("src", "/assets/js/before.js").AddChild(RawText("")),
@@ -298,6 +298,11 @@ func conv(fn, css string) ([]byte, error) {
 		(&Element{Tag: "script"}).AppendProp("src", "/assets/js/after.js").AddChild(RawText("")),
 	).AddChild(
 		(&Element{Tag: "div"}).AddChild(RawText("")).AppendProp("style", "height:10vh;"),
-	))
+	)
+
+	if css != "main" {
+		body.AddChild((&Element{Tag: "script"}).AppendProp("src", "/assets/js/present.js").AddChild(RawText("")))
+	}
+	html.AddChild(body)
 	return []byte("<!DOCTYPE html>" + html.Render()), nil
 }
