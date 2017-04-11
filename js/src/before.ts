@@ -8,7 +8,7 @@
 
         pre.parentNode.insertBefore(node, pre.nextSibling);
     };
-    const codepen = function(key, code) {
+    const codepen = function(key: string, code: HTMLElement) {
         const ele = document.createElement("form");
         ele.target = "codepen";
         ele.method = "POST";
@@ -17,7 +17,7 @@
         const hid = document.createElement("input");
         hid.name = "data";
         hid.type = "hidden";
-        let obj = {};
+        let obj: any = {};
         obj[key] = code.textContent;
         hid.value = JSON.stringify(obj);
         ele.appendChild(hid);
@@ -35,8 +35,9 @@
 
         if (pre.children.length < 1) continue;
 
-        const code = pre.children[0];
-        if (code.tagName !== "CODE") continue;
+        const tmp = pre.children[0];
+        if (tmp.tagName !== "CODE") continue;
+        const code = <HTMLElement>tmp;
 
         // 把 codeblock 通通加上 prism plugin 的 class
         if (pre.className !== "") pre.className += " ";

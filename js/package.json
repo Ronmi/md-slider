@@ -4,7 +4,7 @@
   "description": "Markdown-to-slides",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "tsc": "tsc"
   },
   "author": "Ronmi Ren <ronmi.ren@gmail.com>",
   "license": "GPL-3.0",
