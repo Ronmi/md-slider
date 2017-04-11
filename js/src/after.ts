@@ -1,13 +1,14 @@
 /// <reference path="../go.d.ts" />
 
-function scroll(cur: number) {
-    const e = document.getElementById("page" + cur + "");
-    e.scrollIntoView();
-    const style = window.getComputedStyle(e);
-    window.scrollBy(0, -parseInt(style.marginTop) / 2);
-}
+
 
 (function () {
+    const scroll = function (cur: number) {
+        const e = document.getElementById("page" + cur + "");
+        e.scrollIntoView();
+        const style = window.getComputedStyle(e);
+        window.scrollBy(0, -parseInt(style.marginTop) / 2);
+    };
     const body = document.getElementsByTagName("body")[0];
     let cur = 1;
 

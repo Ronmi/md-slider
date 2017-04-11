@@ -1,6 +1,12 @@
 /// <reference path="../go.d.ts" />
 
 (function(){
+    const scroll = function (cur: number, w: Window) {
+        const e = w.document.getElementById("page" + cur + "");
+        e.scrollIntoView();
+        const style = w.getComputedStyle(e);
+        w.scrollBy(0, -parseInt(style.marginTop) / 2);
+    };
     for (let i = 1; i <= maxPage; i++) {
         const page = document.getElementById("page" + i + "");
         const div = document.createElement("div");
@@ -72,6 +78,6 @@
                 cur = maxPage;
             break;
         }
-        slide.scroll(cur);
+        scroll(cur, slide);
     });
 })();
