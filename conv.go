@@ -291,11 +291,11 @@ func conv(fn, css string) ([]byte, error) {
 	html.AddChild(body.AddChild(
 		(&Element{Tag: "script"}).AddChild(RawText("var maxPage=" + strconv.Itoa(s.Len()+2) + ";")),
 	).AddChild(
-		(&Element{Tag: "script"}).AppendProp("src", "/assets/before.js").AddChild(RawText("")),
+		(&Element{Tag: "script"}).AppendProp("src", "/assets/js/before.js").AddChild(RawText("")),
 	).AddChild(
 		(&Element{Tag: "script"}).AppendProp("src", "/assets/prism.js").AddChild(RawText("")),
 	).AddChild(
-		(&Element{Tag: "script"}).AppendProp("src", "/assets/after.js").AddChild(RawText("")),
+		(&Element{Tag: "script"}).AppendProp("src", "/assets/js/after.js").AddChild(RawText("")),
 	).AddChild(
 		(&Element{Tag: "div"}).AddChild(RawText("")).AppendProp("style", "height:10vh;"),
 	))
