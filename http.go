@@ -1,4 +1,4 @@
-//go:generate go-bindata assets/
+//go:generate go-bindata assets/**
 
 package main
 
