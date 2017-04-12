@@ -19,6 +19,9 @@
         e.preventDefault();
     });
     body.addEventListener("keydown", function(e: KeyboardEvent) {
+        if (e.getModifierState("Fn") || e.getModifierState("Hyper") || e.getModifierState("OS") || e.getModifierState("Super") || e.getModifierState("Win")) return;
+        if (e.getModifierState("Control") || e.getModifierState("Alt") || e.getModifierState("Meta") || e.getModifierState("Shift")) return;
+
         const x = e.which || e.keyCode;
         if (x < 35 || x > 40) return;
         e.preventDefault();
