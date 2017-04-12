@@ -216,7 +216,24 @@ func conv(fn, css string) ([]byte, error) {
 
 	var page *Page
 	buf := ""
+
+	isCodeBlock := false
 	for _, l := range strs[firstTitleLine:] {
+		trimmed := strings.TrimSpace(l)
+		if isCodeBlock {
+			buf += l + "\n"
+			if trimmed == "```" {
+				isCodeBlock = false
+			}
+			continue
+		}
+
+		if strings.HasPrefix(trimmed, "```") {
+			buf += l + "\n"
+			isCodeBlock = true
+			continue
+		}
+
 		sz := len(l)
 		if sz < 2 {
 			buf += l + "\n"
