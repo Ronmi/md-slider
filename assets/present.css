@@ -24,11 +24,22 @@ button:hover {
 }
 
 button.childFrame {
-    position: fixed;
+    margin-top: 0;
+    position: absolute;
     right: 1em;
-    top: 3em;
+    top: 2em;
     height: auto;
-    background-color: rgba(145, 155, 234, 0.9);
+    background-color: #91a7ff;
+}
+
+button.childFrame:hover {
+    margin-top: 0;
+    position: absolute;
+    right: 1em;
+    top: 2em;
+    height: auto;
+    background-color: #455ede;
+    color: white;
 }
 
 div.page {
