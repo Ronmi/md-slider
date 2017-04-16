@@ -13,11 +13,11 @@ button {
     z-index: 999999;
     border: 1px solid #9a9a9a;
     border-radius: 5px;
-    padding: 3px 10px;
+    padding: .3vw 1vw;
     margin-top: 0;
-    margin-left: 1em;
-    top: -1.5em;
+    margin-left: 1.25vw;
     position: relative;
+    top: -1.875vw;
 }
 
 button:hover {
@@ -27,8 +27,8 @@ button:hover {
 button.childFrame {
     margin-top: 0;
     position: absolute;
-    right: 1em;
-    top: 2em;
+    right: 1.25vw;
+    top: 2.5vw;
     height: auto;
     background-color: #91a7ff;
 }
@@ -36,8 +36,8 @@ button.childFrame {
 button.childFrame:hover {
     margin-top: 0;
     position: absolute;
-    right: 1em;
-    top: 2em;
+    right: 1.25vw;
+    top: 2.5vw;
     height: auto;
     background-color: #455ede;
     color: white;
@@ -45,45 +45,45 @@ button.childFrame:hover {
 
 div.page {
     background-color: white;
-    box-shadow: 10px 10px 5px grey;
+    box-shadow: 1vw 1vw .5vw grey;
     width: 80vw;
     height: 75vh;
     box-sizing: border-box;
-    padding: 1em 5%;
-    margin: 1em auto;
+    padding: 1.25vw 5%;
     border: 1px solid white;
-    border-radius: 1em;
-    font-size: x-large;
+    border-radius: 1.25vw;
+    font-size: 1.3vw;
     position: relative;
+    margin: 1.25vw auto;
 }
 
 div.notes {
     box-sizing: border-box;
     height: 20vh;
     width: 80vw;
-    padding: 1em 5%;
+    padding: 1.25vw 5%;
     margin: 0 auto;
     background-color: #e6e6e6;
-    box-shadow: 10px 10px 5px grey;
-    border-radius: 1em;
+    box-shadow: 1vw 1vw .5vw grey;
+    border-radius: 1.25vw;
 }
 
 div.notes pre {
-    font-size: x-large;
+    font-size: 1.3vw;
 }
 
 .pageTitle {
     margin: 0;
     padding: 0;
-    height: 2.5em;
+    height: 3.125vw;
 }
 .pageContent {
     margin: 0;
     padding: 0;
-    height: calc(90% - 4.5em);
+    height: calc(90% - 5.625vw);
 }
 .lonely {
-    height: calc(90% - 2em);
+    height: calc(90% - 2.5vw);
 }
 
 .pageFoot {
@@ -91,7 +91,7 @@ div.notes pre {
     margin: 0;
     font-size: small;
     position: absolute;
-    bottom: 1em;
+    bottom: 1.25vw;
     right: 5%;
     text-align: right;
 }
@@ -106,11 +106,11 @@ div.notes pre {
 }
 
 li,p,span,b,i,strike {
-    font-size: x-large;
+    font-size: 1.3vw;
 }
 
 .lonely > h1 {
-    font-size: 3em;
+    font-size: 375vw;
     position: relative;
     top: 50%;
     transform: translateY(-50%);
@@ -135,17 +135,17 @@ pre[class*="language-"] {
     transform: translateY(-50%);
     margin: 0 auto;
     width: 75%;
-    font-size: 1.3em;
+    font-size: 1.625vw;
 }
 
 .slideTitle h1 {
     margin: 0;
     padding: 0;
-    font-size: 2.5em;
+    font-size: 3.125vw;
 }
 
 .authorName {
-    margin-top: 1em;
+    margin-top: 1.25vw;
 }
 
 .lastPage .authorName {
@@ -153,144 +153,12 @@ pre[class*="language-"] {
 }
 
 .lastPage .authorMail {
-    font-size: 1em;
-    margin-bottom: 10px;
+    font-size: 1.25vw;
+    margin-bottom: 1vw;
 }
 
 .firstPage p,
 .lastPage p {
     margin: 0;
     padding: 0;
-}
-
-@media screen and (max-width: 1440px) {
-    div.page {
-	box-shadow: 8px 8px 4px grey;
-	padding: 0.9em 5%;
-	border-radius: 0.75em;
-	font-size: x-large;
-    }
-
-    .pageTitle {
-	height: 2.5em;
-    }
-    .pageContent {
-	height: calc(90% - 4.5em);
-    }
-    .lonely {
-	height: calc(90% - 2em);
-    }
-
-    .pageFoot {
-	font-size: small;
-    }
-
-    li,p,span,b,i,strike {
-	font-size: x-large;
-    }
-
-    .lonely > h1 {
-	font-size: 2.2em;
-    }
-
-    h1 {
-	font-size: 1.9em;
-    }
-
-    .firstPage > .pageContent,
-    .lastPage > .pageContent {
-	font-size: 1em;
-    }
-
-    .slideTitle h1 {
-	font-size: 1.9em;
-    }
-
-    .authorName {
-	margin-top: 0.6em;
-    }
-
-    .lastPage .authorMail {
-	font-size: 1em;
-    }
-
-    .authorNotes {
-	font-size: 0.6em;
-    }
-
-    div.notes {
-	padding: 0.75em 5%;
-	box-shadow: 8px 8px 4px grey;
-	border-radius: 0.75em;
-    }
-    
-    div.notes pre {
-	font-size: x-large;
-    }
-}
-
-@media screen and (max-width: 1080px) {
-    div.page {
-	box-shadow: 6px 6px 3px grey;
-	padding: 0.7em 5%;
-	border-radius: 0.5em;
-	font-size: large;
-    }
-
-    .pageTitle {
-	height: 2em;
-    }
-    .pageContent {
-	height: calc(90% - 3.5em);
-    }
-    .lonely {
-	height: calc(90% - 1.5em);
-    }
-
-    .pageFoot {
-	font-size: x-small;
-    }
-
-    li,p,span,b,i,strike {
-	font-size: large;
-    }
-
-    .lonely > h1 {
-	font-size: 2em;
-    }
-
-    h1 {
-	font-size: 1.7em;
-    }
-
-    .firstPage > .pageContent,
-    .lastPage > .pageContent {
-	font-size: 0.8em;
-    }
-
-    .slideTitle h1 {
-	font-size: 1.7em;
-    }
-
-    .authorName {
-	margin-top: 0.5em;
-    }
-
-    .lastPage .authorMail {
-	font-size: 0.8em;
-    }
-
-    .authorNotes {
-	font-size: 0.5em;
-    }
-
-    div.notes {
-	padding: 0.5em 5%;
-	box-shadow: 6px 6px 3px grey;
-	border-radius: 0.5em;
-    }
-    
-    div.notes pre {
-	font-size: large;
-    }
 }
