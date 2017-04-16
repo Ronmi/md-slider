@@ -14,9 +14,10 @@ button {
     border: 1px solid #9a9a9a;
     border-radius: 5px;
     padding: 3px 10px;
-    margin-top: -2em;
+    margin-top: 0;
     margin-left: 1em;
     position: relative;
+    top: -1.5em;
 }
 
 button:hover {
@@ -130,4 +131,116 @@ pre[class*="language-"] {
 .lastPage p {
     margin: 0;
     padding: 0;
+}
+
+@media screen and (max-width: 1440px) {
+    div.page {
+	box-shadow: 8px 8px 4px grey;
+	padding: 0.9em 5%;
+	border-radius: 0.75em;
+	font-size: x-large;
+    }
+
+    .pageTitle {
+	height: 2.5em;
+    }
+    .pageContent {
+	height: calc(90% - 4.5em);
+    }
+    .lonely {
+	height: calc(90% - 2em);
+    }
+
+    .pageFoot {
+	font-size: small;
+    }
+
+    li,p,span,b,i,strike {
+	font-size: x-large;
+    }
+
+    .lonely > h1 {
+	font-size: 2.2em;
+    }
+
+    h1 {
+	font-size: 1.9em;
+    }
+
+    .firstPage > .pageContent,
+    .lastPage > .pageContent {
+	font-size: 1em;
+    }
+
+    .slideTitle h1 {
+	font-size: 1.9em;
+    }
+
+    .authorName {
+	margin-top: 0.6em;
+    }
+
+    .lastPage .authorMail {
+	font-size: 1em;
+    }
+
+    .authorNotes {
+	font-size: 0.6em;
+    }
+}
+
+@media screen and (max-width: 1080px) {
+    div.page {
+	box-shadow: 6px 6px 3px grey;
+	padding: 0.7em 5%;
+	border-radius: 0.5em;
+	font-size: large;
+    }
+
+    .pageTitle {
+	height: 2em;
+    }
+    .pageContent {
+	height: calc(90% - 3.5em);
+    }
+    .lonely {
+	height: calc(90% - 1.5em);
+    }
+
+    .pageFoot {
+	font-size: x-small;
+    }
+
+    li,p,span,b,i,strike {
+	font-size: large;
+    }
+
+    .lonely > h1 {
+	font-size: 2em;
+    }
+
+    h1 {
+	font-size: 1.7em;
+    }
+
+    .firstPage > .pageContent,
+    .lastPage > .pageContent {
+	font-size: 0.8em;
+    }
+
+    .slideTitle h1 {
+	font-size: 1.7em;
+    }
+
+    .authorName {
+	margin-top: 0.5em;
+    }
+
+    .lastPage .authorMail {
+	font-size: 0.8em;
+    }
+
+    .authorNotes {
+	font-size: 0.5em;
+    }
 }
