@@ -110,7 +110,7 @@ li,p,span,b,i,strike {
 }
 
 .lonely > h1 {
-    font-size: 375vw;
+    font-size: 3.75vw;
     position: relative;
     top: 50%;
     transform: translateY(-50%);
