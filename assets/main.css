@@ -69,6 +69,7 @@ div.page {
     display: block;
     height: inherit;
     width: auto;
+    max-width: 100%;
 }
 
 li,p,span,b,i,strike {
