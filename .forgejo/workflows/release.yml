@@ -1,0 +1,124 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: any
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - uses: actions/setup-go@v5
+      with:
+        go-version: ">=1.23"
+
+    - name: Restore cache
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.cache/go-build
+          ~/go/pkg/mod
+        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-go-
+    - name: Run test
+      run: go test -v ./...
+    - name: Build js
+      run: |
+          cd js
+          npm install
+          npm run tsc
+    - name: Prepare mount point
+      run: mkdir data
+
+    - name: Prepare docker multiarch build
+      uses: https://github.com/docker/setup-qemu-action@v3
+    - name: Setup docker multiarch build
+      uses: https://github.com/docker/setup-buildx-action@v3
+      with:
+        platforms: linux/amd64,linux/arm64
+    - name: Docker - login to hub
+      uses: https://github.com/docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_HUB_USER }}
+        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+    - name: Build binary for amd64 linux
+      run: |
+        GOARCH=amd64 GOOS=linux go build -o md-slider
+        cp md-slider md-slider.linux.amd64
+        sha1sum md-slider.linux.amd64 > md-slider.linux.amd64.sha1
+    - name: Build docker image for amd64
+      uses: https://github.com/docker/build-push-action@v6
+      with:
+        context: .
+        platforms: linux/amd64
+        file: ci.dockerfile
+        push: true
+        pull: true
+        tags: ronmi/md-slider:amd64
+    - name: Build binary for arm64 linux
+      run: |
+        GOARCH=arm64 GOOS=linux go build -o md-slider
+        cp md-slider md-slider.linux.arm64
+        sha1sum md-slider.linux.arm64 > md-slider.linux.arm64.sha1
+    - name: Build docker image for arm64
+      uses: https://github.com/docker/build-push-action@v6
+      with:
+        context: .
+        platforms: linux/arm64
+        file: ci.dockerfile
+        push: true
+        pull: true
+        tags: ronmi/md-slider:arm64
+
+
+    - name: Build binary for amd64 darwin
+      run: |
+        GOARCH=amd64 GOOS=darwin go build -o md-slider.darwin.amd64
+        sha1sum md-slider.darwin.amd64 > md-slider.darwin.amd64.sha1
+    - name: Build binary for arm64 darwin
+      run: |
+        GOARCH=arm64 GOOS=darwin go build -o md-slider.darwin.arm64
+        sha1sum md-slider.darwin.arm64 > md-slider.darwin.arm64.sha1
+    - name: Build binary for amd64 windows
+      run: |
+        GOARCH=amd64 GOOS=windows go build -o md-slider.amd64.exe
+        sha1sum md-slider.amd64.exe > md-slider.amd64.exe.sha1
+    - name: Build binary for arm64 windows
+      run: |
+        GOARCH=arm64 GOOS=windows go build -o md-slider.arm64.exe
+        sha1sum md-slider.arm64.exe > md-slider.arm64.exe.sha1
+    
+
+    - name: Create multiarch image
+      run: |
+        docker buildx imagetools create -t ronmi/md-slider ronmi/md-slider:arm64 ronmi/md-slider:amd64
+    - name: Update readme to docker hub
+      uses: https://github.com/peter-evans/dockerhub-description@v4
+      with:
+        readme-filepath: ./readme.md
+        username: ${{ secrets.DOCKER_HUB_USER }}
+        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+        repository: ronmi/md-slider
+    - name: Create Release
+      uses: https://github.com/softprops/action-gh-release@v1
+      with:
+        files: |
+          md-slider.linux.amd64
+          md-slider.linux.arm64
+          md-slider.amd64.exe
+          md-slider.arm64.exe
+          md-slider.darwin.amd64
+          md-slider.darwin.arm64
+          md-slider.linux.amd64.sha1
+          md-slider.linux.arm64.sha1
+          md-slider.amd64.exe.sha1
+          md-slider.arm64.exe.sha1
+          md-slider.darwin.amd64.sha1
+          md-slider.darwin.arm64.sha1
+        token: ${{ secrets.FORGEJO_AUTH_TOKEN }}
