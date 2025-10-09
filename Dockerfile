@@ -1,7 +1,14 @@
+FROM node AS node_builder
+WORKDIR /src
+COPY . .
+WORKDIR /src/js
+ENV CI=true
+RUN corepack enable pnpm && pnpm install && pnpm run tsc
+
 FROM golang AS builder
 
 WORKDIR /src
-COPY . .
+COPY --from=node_builder /src /src
 RUN mkdir -p data ; go build -o md-slider
 
 FROM ronmi/mingo:latest
