@@ -1,7 +1,5 @@
 Markdown to slide
 
-[![Build Status](https://ci.ronmi.tw/api/badges/ronmi/md-slider/status.svg)](https://ci.ronmi.tw/ronmi/md-slider)
-
 # Synopsis
 
 ```bash
@@ -44,7 +42,7 @@ some more text
 [Copyright information of the gopher image](https://blog.golang.org/gopher)
 ```
 
-![example animation of slides above](https://git.ronmi.tw/ronmi/md-slider/raw/master/example.gif)
+![example animation of slides above](https://raw.githubusercontent.com/Ronmi/md-slider/refs/heads/master/example.gif)
 
 # Markup
 
