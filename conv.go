@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"net/url"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -97,7 +97,7 @@ func (s *Slides) makeLastPage() *Element {
 	ret.AddChild((&Element{Tag: "h2"}).AddChild(Text("Thank you")))
 	ret.AddChild((&Element{Tag: "div"}).AddClass("authorName").AddChild(MDText("**" + s.Name + "**")))
 	ret.AddChild((&Element{Tag: "div"}).AddClass("authorMail").AddChild(MDText(s.Email)))
-	if s.Notes != nil && len(s.Notes) > 0 {
+	if len(s.Notes) > 0 {
 		for _, n := range s.Notes {
 			ret.AddChild((&Element{Tag: "div"}).AddClass("authorNotes").AddChild(MDText(n)))
 		}
@@ -137,7 +137,7 @@ func (s *Slides) ToElements() []*Element {
 }
 
 func conv(fn, css string) ([]byte, error) {
-	barr, err := ioutil.ReadFile(fn)
+	barr, err := os.ReadFile(fn)
 	if err != nil {
 		return nil, err
 	}

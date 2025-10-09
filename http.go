@@ -1,15 +1,16 @@
-//go:generate go-bindata assets assets/js assets/prism_grammars
-
 package main
 
 import (
+	"embed"
 	"io"
-	"io/ioutil"
 	"mime"
 	"net/http"
 	"os"
 	"strings"
 )
+
+//go:embed assets
+var assetsFS embed.FS
 
 type httpHandler struct {
 	devMode bool
@@ -18,14 +19,14 @@ type httpHandler struct {
 func (h httpHandler) loadAsset(fn string) ([]byte, error) {
 	p := "assets/" + fn
 	if !h.devMode {
-		return Asset(p)
+		return assetsFS.ReadFile(p)
 	}
 
 	if _, err := os.Stat("." + p); err != nil {
-		return Asset(p)
+		return assetsFS.ReadFile(p)
 	}
 
-	return ioutil.ReadFile("." + p)
+	return os.ReadFile("." + p)
 }
 
 func (h httpHandler) setMIME(w http.ResponseWriter, fn string) {

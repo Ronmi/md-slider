@@ -29,7 +29,7 @@ func TestHTMLElement(t *testing.T) {
 			e: Element{
 				Tag: "a",
 				Props: []Prop{
-					Prop{"href", "https://google.com"},
+					{"href", "https://google.com"},
 				},
 				Content: []Renderer{
 					Text("Google"),
@@ -54,7 +54,7 @@ Yahoo</code>`,
 			e: Element{
 				Tag: "a",
 				Props: []Prop{
-					Prop{"href", "https://google.com"},
+					{"href", "https://google.com"},
 				},
 				Content: []Renderer{
 					Text("All hail to "),

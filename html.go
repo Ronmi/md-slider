@@ -68,11 +68,11 @@ type Prop struct {
 
 // Render for property
 func (p Prop) Render() string {
-	txt := strings.Replace(p.Value, "\\", "\\\\", -1)
-	txt = strings.Replace(txt, `"`, `\"`, -1)
-	txt = strings.Replace(txt, "\n", `\n`, -1)
-	txt = strings.Replace(txt, "\r", `\r`, -1)
-	txt = strings.Replace(txt, "\t", `\t`, -1)
+	txt := strings.ReplaceAll(p.Value, "\\", "\\\\")
+	txt = strings.ReplaceAll(txt, `"`, `\"`)
+	txt = strings.ReplaceAll(txt, "\n", `\n`)
+	txt = strings.ReplaceAll(txt, "\r", `\r`)
+	txt = strings.ReplaceAll(txt, "\t", `\t`)
 	return fmt.Sprintf(`%s="%s"`, p.Name, txt)
 }
 
