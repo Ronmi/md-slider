@@ -13,12 +13,12 @@
     let cur = 1;
 
     // enable prismjs
-    // @ts-ignore
-    document.querySelectorAll('pre code').forEach((el) => {
-        if (typeof Prism !== 'undefined') {
+    if (typeof Prism !== 'undefined') {
+        // @ts-ignore
+        document.querySelectorAll('code').forEach((el) => {
             Prism.highlightElement(el);
-        }
-    });
+        });
+    }
 
   
     body.addEventListener("keyup", function(e: KeyboardEvent) {
