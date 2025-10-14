@@ -12,7 +12,15 @@
     const body = document.getElementsByTagName("body")[0];
     let cur = 1;
 
-    Prism.plugins.autoloader.languages_path = "/assets/prism_grammars/";
+    // enable prismjs
+    // @ts-ignore
+    document.querySelectorAll('pre code').forEach((el) => {
+        if (typeof Prism !== 'undefined') {
+            Prism.highlightElement(el);
+        }
+    });
+
+  
     body.addEventListener("keyup", function(e: KeyboardEvent) {
         const x = e.which || e.keyCode;
         if (x < 35 || x > 40) return;

@@ -9,7 +9,7 @@
   "author": "Ronmi Ren <ronmi.ren@gmail.com>",
   "license": "GPL-3.0",
   "devDependencies": {
-    "@types/prismjs": "^1.6.1",
+    "@types/prismjs": "^1.26.0",
     "typescript": "^2.2.2"
   }
 }
