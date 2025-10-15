@@ -81,6 +81,10 @@ http://127.0.0.1:9527/example.md
 http://127.0.0.1:9527/example.md?present=enable
 ```
 
+# Internal mode
+
+Set environmental variable `MD_SLIDER_INTERNAL_MODE=1` to enable it. It enables you to download raw file. Useful when you share md-slider in your office.
+
 # License
 
 GPLv3

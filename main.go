@@ -8,7 +8,8 @@ import (
 
 func main() {
 	h := httpHandler{
-		devMode: os.Getenv("MD_SLIDER_DEV_MODE") != "",
+		devMode:      os.Getenv("MD_SLIDER_DEV_MODE") != "",
+		internalMode: os.Getenv("MD_SLIDER_INTERNAL_MODE") != "",
 	}
 	http.Handle("/", h)
 	log.Print(http.ListenAndServe(":8000", nil))

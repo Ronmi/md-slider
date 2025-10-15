@@ -13,7 +13,8 @@ import (
 var assetsFS embed.FS
 
 type httpHandler struct {
-	devMode bool
+	devMode      bool
+	internalMode bool
 }
 
 func (h httpHandler) loadAsset(fn string) ([]byte, error) {
@@ -77,13 +78,28 @@ func (h httpHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			if !i.IsDir() && !strings.HasSuffix(i.Name(), ".md") {
 				continue
 			}
-			ul.AddChild(
-				(&Element{Tag: "li"}).AddChild(&Element{
+			li := &Element{Tag: "li"}
+			if h.internalMode {
+				li.AddChild(&Element{
+					Tag:     "span",
+					Content: []Renderer{Text(" [")},
+				})
+				li.AddChild(&Element{
 					Tag:     "a",
-					Props:   []Prop{{Name: "href", Value: "/" + dir + "/" + i.Name()}},
-					Content: []Renderer{Text(i.Name())},
-				}),
-			)
+					Props:   []Prop{{Name: "href", Value: "/" + dir + "/" + i.Name() + "?raw=1"}},
+					Content: []Renderer{Text("raw")},
+				})
+				li.AddChild(&Element{
+					Tag:     "span",
+					Content: []Renderer{Text("]")},
+				})
+			}
+			li.AddChild(&Element{
+				Tag:     "a",
+				Props:   []Prop{{Name: "href", Value: "/" + dir + "/" + i.Name()}},
+				Content: []Renderer{Text(i.Name())},
+			})
+			ul.AddChild(li)
 		}
 
 		ret, err := h.loadAsset("list.html")
@@ -113,6 +129,18 @@ func (h httpHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		defer f.Close()
 
 		io.Copy(w, f)
+		return
+	}
+
+	if h.internalMode && r.URL.Query().Get("raw") != "" {
+		f, err := os.Open(dir)
+		if err != nil {
+			w.WriteHeader(403)
+			return
+		}
+		defer f.Close()
+
+		http.ServeContent(w, r, info.Name(), info.ModTime(), f)
 		return
 	}
 
