@@ -80,6 +80,7 @@ func (h httpHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			}
 			li := &Element{Tag: "li"}
 			if h.internalMode {
+				// link to raw markdown file
 				li.AddChild(&Element{
 					Tag:     "span",
 					Content: []Renderer{Text(" [")},
@@ -93,6 +94,22 @@ func (h httpHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 					Tag:     "span",
 					Content: []Renderer{Text("]")},
 				})
+
+				// link to presentation mode
+				li.AddChild(&Element{
+					Tag:     "span",
+					Content: []Renderer{Text(" [")},
+				})
+				li.AddChild(&Element{
+					Tag:     "a",
+					Props:   []Prop{{Name: "href", Value: "/" + dir + "/" + i.Name() + "?present=1"}},
+					Content: []Renderer{Text("present")},
+				})
+				li.AddChild(&Element{
+					Tag:     "span",
+					Content: []Renderer{Text("]")},
+				})
+
 			}
 			li.AddChild(&Element{
 				Tag:     "a",
